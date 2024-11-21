@@ -1,0 +1,19 @@
+{
+    "developer": "scarlxrd1337",
+    "token": "token",
+    "buyer": null,
+    "color": "hex_color",
+    "footer": "Your footer",
+    "blockcypher": "blockcypher api key",
+    "whitelist": [],
+    "scammers": [],
+    "config": {
+        "logs": {
+            "status": "off",
+            "channel": null
+        },
+        "tickets": {
+            "category": null
+        }
+    }
+}
