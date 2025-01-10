@@ -1,19 +1,19 @@
 {
-    "developer": "scarlxrd1337",
-    "token": "token",
-    "buyer": null,
-    "color": "hex_color",
-    "footer": "Your footer",
-    "blockcypher": "blockcypher api key",
+    "developer": "potato.service",
+    "token": "MTMyNzEyMzQ0MTY4MTE3MDQ1Mw.GPOk3h.TXo3LTMaPhF5Xg2Rd9ZH-3a_qVl9Uq_86eFhbs",
+    "buyer": 1137671595100475462,
+    "color": "#A020F0",
+    "footer": "Made by potato.service",
+    "blockcypher": "e74a081437c84921a471ef21f360fcdc",
     "whitelist": [],
     "scammers": [],
     "config": {
         "logs": {
-            "status": "off",
-            "channel": null
+            "status": "on",
+            "channel": 1327124904629501993
         },
         "tickets": {
-            "category": null
+            "category": 1327125856983715840
         }
     }
 }
