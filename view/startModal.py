@@ -16,14 +16,14 @@ class startModal(Modal):
         
         item = TextInput(
             label="Which item are you dealing",
-            placeholder="Exemple: 5 Nitro Boost",
+            placeholder="Example: 5 Nitro Boost",
             style=TextStyle.short,
             required=True
         )
         
         price = TextInput(
-            label="How much buyer need to pay for all",
-            placeholder="Exemple: 10€/10$",
+            label="How much buyer needs to pay for all",
+            placeholder="Example: 10€/10$",
             style=TextStyle.short,
             required=True
         )
@@ -46,13 +46,13 @@ class startModal(Modal):
         descValue = self.children[2].value
         
         category = discord.utils.get(interaction.guild.categories, id=config['config']['tickets']['category'])
-        if category == None:
-            return await interaction.response.send_message("Sorry, the category where ticket need to be opened not found. Please contact a staff member", ephemeral=True)
+        if category is None:
+            return await interaction.response.send_message("Sorry, the category where the ticket needs to be opened was not found. Please contact a staff member", ephemeral=True)
         filename = gen_uid()
         
         embed = discord.Embed(
             title=f"`👑`・{interaction.guild.name} MiddleMan Service",
-            description=f"***Informations about the deal***\n\n> **Deal Item:** *{itemValue}*\n> **Money will be given:** *{priceValue}*\n**> Description:** *```{descValue}```*",
+            description=f"***Information about the deal***\n\n> **Deal Item:** *{itemValue}*\n> **Money to be given:** *{priceValue}*\n**> Description:** *```{descValue}```*",
             color=embed_color()
         )
         embed.set_footer(text=footer(self.bot, uid=filename))
@@ -60,28 +60,33 @@ class startModal(Modal):
         view.add_item(addUserButton(self.userId, filename))
         view.add_item(cancelButton(self.userId, filename))
         channel = await category.create_text_channel(name=f"{interaction.user.name}-mm")
+        
+        # Set permissions for the ticket creator
         await channel.set_permissions(interaction.guild.default_role, read_messages=False)
+        await channel.set_permissions(interaction.user, read_messages=True, send_messages=True, view_channel=True)
+
         await channel.send(embed=embed, view=view)
         await interaction.response.send_message(f"Your ticket is opened in {channel.mention}", ephemeral=True)
         payload = {
             "confirmation": 0,
             "sender": None,
-            "recever": None,
+            "receiver": None,
             "senderConfirm": False,
-            "receverConfirm": False,
+            "receiverConfirm": False,
             "rolesConfirm": 0
         }
         json.dump(payload, open(f"process/{filename}.json", 'w', encoding='utf-8'), indent=4)
-        config = load_json()
+        
+        # Log channel logic
         logsConfig = config['config']['logs']
-        if logsConfig['status'] == "on":
-            if logsConfig['channel'] != None:
-                logsChannel = discord.utils.get(interaction.guild.channels, id=logsConfig['channel'])
-                if logsChannel:
-                    embed = discord.Embed(
-                        title="`👑`・Middleman Ticket Opened",
-                        description=f"***Informations about the deal ({channel.mention})***\n\n> **Opened by:** {interaction.user.mention}`{interaction.user.id}`\n> **Item:** {itemValue}\n> **Price:** {priceValue}",
-                        color=embed_color()
-                    )
-                    embed.set_footer(text=footer(self.bot, uid=filename))
-                    await logsChannel.send(embed=embed)
+        if logsConfig['status'] == "on" and logsConfig['channel'] is not None:
+            logsChannel = discord.utils.get(interaction.guild.channels, id=logsConfig['channel'])
+            if logsChannel:
+                log_embed = discord.Embed(
+                    title="`👑`・Middleman Ticket Opened",
+                    description=f"***Information about the deal ({channel.mention})***\n\n> **Opened by:** {interaction.user.mention} `{interaction.user.id}`\n> **Item:** {itemValue}\n> **Price:** {priceValue}",
+                    color=embed_color()
+                )
+                log_embed.set_footer(text=footer(self.bot, uid=filename))
+                await logsChannel.send(embed=log_embed)
+    
