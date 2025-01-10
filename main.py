@@ -22,7 +22,7 @@ async def load_commands(bot) -> None:
 class MyBot(commands.Bot):
     def __init__(self) -> None:
         super().__init__(
-            command_prefix="discord.gg/purity-dev",
+            command_prefix="yoyo",
             intents=discord.Intents.all(),
             help_command=None
         )
