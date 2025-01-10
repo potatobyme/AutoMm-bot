@@ -47,7 +47,7 @@ class confirmRoles(Button):
         if file['rolesConfirm'] == 2:
             wallet, privateKey, publicKey, wif = create_wallet()
             embed = discord.Embed(
-                title="Awaiting Paiement",
+                title="Awaiting Payment",
                 description=f"""
 # <@{file['sender']}> Please send amount at this adress:
 
@@ -56,7 +56,7 @@ class confirmRoles(Button):
                 """,
                 color=embed_color()
             )
-            embed.set_footer(text="Awaiting paiement... [Anything]")
+            embed.set_footer(text="Awaiting Payment... [Anything]")
             view = discord.ui.View(timeout=None)
             view.add_item(copyAddress(wallet, self.filename))
             await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
@@ -65,24 +65,24 @@ class confirmRoles(Button):
                 check, litoshi = check_transactions(wallet)
                 if check == "detected but not confirmed":
                     embed = discord.Embed(
-                        title="Paiement Detected",
+                        title="Payment Detected",
                         description=f"""
-# Paiement detected, please wait confirmation:
+# Payment detected, please wait confirmation:
 
 > **Address:** `{wallet}`
 > **Please send only litecoin and any other cryptocurrency.**
                         """, color=embed_color()
                     )
-                    embed.set_footer(text="Detected paiement... [Detected]")
+                    embed.set_footer(text="Detected Payment... [Detected]")
                     await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=None)
                 elif check == "confirmed":
                     try:
                         ltcAmount = litoshi / 100000000
                         eurAmount = convertToLtc(ltcAmount)
                         embed = discord.Embed(
-                            title="Paiement Confirmed and receveid",
+                            title="Payment Confirmed and receveid",
                             description=f"""
-# Paiement are confirmed and receveid.
+# Payment are confirmed and receveid.
 
 > **Amount in litecoin:** `{ltcAmount} ltc`  
 > **Amount in €: `{eurAmount} €`** 
@@ -91,7 +91,7 @@ class confirmRoles(Button):
                             """, 
                             color=embed_color()
                         )
-                        embed.set_footer(text="Receveid paiement [Waiting]")
+                        embed.set_footer(text="Receveid Payment [Waiting]")
                         view = discord.ui.View(timeout=None)
                         view.add_item(confirmDeal(self.filename, privateKey, eurAmount))
                         view.add_item(refundButton(self.filename, eurAmount, privateKey))
