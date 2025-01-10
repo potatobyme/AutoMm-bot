@@ -17,7 +17,7 @@ def embed_color() -> int:
 
 def footer(bot, uid) -> str:
     now = datetime.now().strftime("%H:%M:%S")
-    return f"[{now}] - {bot.user.name} | MiddleMan bot by scarlxrd | uid: {uid}"
+    return f"[{now}] - {bot.user.name} | MiddleMan bot by Potato.Service| uid: {uid}"
 
 async def unauthorized(interaction) -> None:
     embed = discord.Embed(
