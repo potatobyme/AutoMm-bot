@@ -27,7 +27,7 @@ pip install -r requirements.txt
 After the installation you need to configure the `config.json` file
 ```json
 {
-    "developer": "scarlxrd1337", -> Dont be a skid lmao
+    "developer": "patato", -> Dont be a skid lmao
     "token": "token", -> Your bot token
     "buyer": null, -> Your discord Id
     "color": "hex_color", -> Embeds Colors (Hex Code)
