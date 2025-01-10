@@ -26,13 +26,13 @@ class walletModal(Modal):
         embed = discord.Embed(
             title="MiddleMan Confirmed",
             description=f"""
-# The deal processed successfuly, now please wait...
+# The deal processed successfuly, And Payment was Released 
 
 > **Transaction Id:** `{txId}`
 > **Wallet:** `{toAddress}`
 > **Amount:** `{self.amount} €`
 
-**Please double check your wallet when your receveid and you confirm this transaction.**
+**MiddleMan Deal completed.**
             """,
             color=embed_color()
         )
