@@ -70,9 +70,9 @@ class startModal(Modal):
         payload = {
             "confirmation": 0,
             "sender": None,
-            "receiver": None,
+            "recever": None,
             "senderConfirm": False,
-            "receiverConfirm": False,
+            "receverConfirm": False,
             "rolesConfirm": 0
         }
         json.dump(payload, open(f"process/{filename}.json", 'w', encoding='utf-8'), indent=4)
