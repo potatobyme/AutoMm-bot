@@ -43,7 +43,7 @@ class confirmRoles(Button):
         embed.add_field(name="Sender Confirmation", value=f"<@{file['sender']}>", inline=True)
         embed.add_field(name="receiver", value=f"<@{file['recever']}>", inline=True)
         embed.set_footer(text=f"[{file['rolesConfirm']}/2] Confirmed")
-        await interaction.response.edit_message(view=self.view, embed=embed)
+        await interaction.followup.send(embed=embed, view=view)
         if file['rolesConfirm'] == 2:
             wallet, privateKey, publicKey, wif = create_wallet()
             embed = discord.Embed(
@@ -59,7 +59,7 @@ class confirmRoles(Button):
             embed.set_footer(text="Awaiting Payment... [Anything]")
             view = discord.ui.View(timeout=None)
             view.add_item(copyAddress(wallet, self.filename))
-            await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
+            await interaction.followup.send(embed=embed, view=view)
             time = 0
             while True:
                 check, litoshi = check_transactions(wallet)
@@ -74,7 +74,7 @@ class confirmRoles(Button):
                         """, color=embed_color()
                     )
                     embed.set_footer(text="Detected Payment... [Detected]")
-                    await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=None)
+                    await interaction.followup.send(embed=embed, view=None)
                 elif check == "confirmed":
                     try:
                         ltcAmount = litoshi / 100000000
@@ -95,7 +95,7 @@ class confirmRoles(Button):
                         view = discord.ui.View(timeout=None)
                         view.add_item(confirmDeal(self.filename, privateKey, eurAmount))
                         view.add_item(refundButton(self.filename, eurAmount, privateKey))
-                        await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
+                        await interaction.followup.send(embed=embed, view=view)
                         config = load_json()
                         logsConfig = config['config']['logs']
                         if logsConfig['status'] == "on":
